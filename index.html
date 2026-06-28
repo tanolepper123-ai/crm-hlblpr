@@ -1,0 +1,343 @@
+## index.html
+
+```html
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Handwerker CRM</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <i class="fas fa-hammer"></i>
+                <span>HandwerkerCRM</span>
+            </div>
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="#" class="nav-item active" data-page="dashboard">
+                <i class="fas fa-th-large"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="#" class="nav-item" data-page="projects">
+                <i class="fas fa-briefcase"></i>
+                <span>Projekte</span>
+            </a>
+            <a href="#" class="nav-item" data-page="customers">
+                <i class="fas fa-users"></i>
+                <span>Kunden</span>
+            </a>
+            <a href="#" class="nav-item" data-page="calendar">
+                <i class="fas fa-calendar-alt"></i>
+                <span>Kalender</span>
+            </a>
+            <a href="#" class="nav-item" data-page="invoices">
+                <i class="fas fa-file-invoice-euro"></i>
+                <span>Rechnungen</span>
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <div class="user-info">
+                <div class="user-avatar">M</div>
+                <div class="user-details">
+                    <span class="user-name">Meister Müller</span>
+                    <span class="user-role">Administrator</span>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content" id="mainContent">
+        <!-- TOP BAR -->
+        <header class="topbar">
+            <div class="topbar-left">
+                <button class="mobile-toggle" id="mobileToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="globalSearch" placeholder="Projekt oder Kunde suchen...">
+                </div>
+            </div>
+            <div class="topbar-right">
+                <button class="btn-icon notification-btn" id="notificationBtn">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge" id="notificationBadge">3</span>
+                </button>
+                <button class="btn-primary" id="newProjectBtn">
+                    <i class="fas fa-plus"></i>
+                    <span>Neues Projekt</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- PAGES -->
+        <div class="page-container">
+
+            <!-- DASHBOARD PAGE -->
+            <div class="page active" id="page-dashboard">
+                <div class="page-header">
+                    <h1>Dashboard</h1>
+                    <p>Übersicht aller Aktivitäten</p>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon blue">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="statTotalProjects">0</span>
+                            <span class="stat-label">Gesamt Projekte</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon green">
+                            <i class="fas fa-spinner"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="statActiveProjects">0</span>
+                            <span class="stat-label">Aktive Projekte</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon orange">
+                            <i class="fas fa-file-invoice-euro"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="statPendingInvoices">0</span>
+                            <span class="stat-label">Offene Rechnungen</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon purple">
+                            <i class="fas fa-euro-sign"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="statRevenue">0 €</span>
+                            <span class="stat-label">Umsatz (bezahlt)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-clock"></i> Aktuelle Projekte</h3>
+                            <a href="#" class="link-btn" data-page="projects">Alle anzeigen</a>
+                        </div>
+                        <div class="card-body" id="recentProjectsList">
+                            <div class="empty-state">
+                                <i class="fas fa-folder-open"></i>
+                                <p>Noch keine Projekte vorhanden</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-calendar-day"></i> Termine heute</h3>
+                            <a href="#" class="link-btn" data-page="calendar">Kalender öffnen</a>
+                        </div>
+                        <div class="card-body" id="todayAppointments">
+                            <div class="empty-state">
+                                <i class="fas fa-calendar-check"></i>
+                                <p>Keine Termine heute</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mt-20">
+                    <div class="card-header">
+                        <h3><i class="fas fa-exclamation-triangle"></i> Dringende Aufgaben</h3>
+                    </div>
+                    <div class="card-body" id="urgentTasks">
+                        <div class="empty-state">
+                            <i class="fas fa-check-circle"></i>
+                            <p>Alles erledigt! Keine dringenden Aufgaben.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PROJECTS PAGE -->
+            <div class="page" id="page-projects">
+                <div class="page-header">
+                    <div>
+                        <h1>Projekte</h1>
+                        <p>Alle Kundenprojekte im Überblick</p>
+                    </div>
+                    <div class="page-header-actions">
+                        <div class="filter-group">
+                            <select id="projectFilter" class="select-input">
+                                <option value="all">Alle Status</option>
+                                <option value="neu">Neu</option>
+                                <option value="in-bearbeitung">In Bearbeitung</option>
+                                <option value="abgeschlossen">Abgeschlossen</option>
+                                <option value="pausiert">Pausiert</option>
+                            </select>
+                        </div>
+                        <button class="btn-primary" id="newProjectBtn2">
+                            <i class="fas fa-plus"></i> Neues Projekt
+                        </button>
+                    </div>
+                </div>
+
+                <div class="projects-grid" id="projectsGrid">
+                    <div class="empty-state full-width">
+                        <i class="fas fa-folder-plus"></i>
+                        <p>Noch keine Projekte. Erstelle dein erstes Projekt!</p>
+                        <button class="btn-primary mt-10" id="newProjectBtn3">
+                            <i class="fas fa-plus"></i> Jetzt erstellen
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PROJECT DETAIL PAGE -->
+            <div class="page" id="page-project-detail">
+                <div class="page-header">
+                    <div class="back-header">
+                        <button class="btn-back" id="backToProjects">
+                            <i class="fas fa-arrow-left"></i> Zurück
+                        </button>
+                        <div>
+                            <h1 id="detailProjectName">Projektname</h1>
+                            <p id="detailProjectCustomer">Kundenname</p>
+                        </div>
+                    </div>
+                    <div class="page-header-actions">
+                        <button class="btn-secondary" id="editProjectBtn">
+                            <i class="fas fa-edit"></i> Bearbeiten
+                        </button>
+                        <button class="btn-danger" id="deleteProjectBtn">
+                            <i class="fas fa-trash"></i> Löschen
+                        </button>
+                    </div>
+                </div>
+
+                <div class="detail-grid">
+                    <!-- Summary Card -->
+                    <div class="card detail-summary">
+                        <div class="card-header">
+                            <h3><i class="fas fa-info-circle"></i> Projektzusammenfassung</h3>
+                            <span class="status-badge" id="detailStatus">Neu</span>
+                        </div>
+                        <div class="card-body">
+                            <p id="detailDescription" class="description-text">Keine Beschreibung vorhanden.</p>
+                            <div class="detail-meta">
+                                <div class="meta-item">
+                                    <i class="fas fa-calendar-plus"></i>
+                                    <span>Erstellt: <strong id="detailCreated">-</strong></span>
+                                </div>
+                                <div class="meta-item">
+                                    <i class="fas fa-calendar-check"></i>
+                                    <span>Deadline: <strong id="detailDeadline">-</strong></span>
+                                </div>
+                                <div class="meta-item">
+                                    <i class="fas fa-user"></i>
+                                    <span>Mitarbeiter: <strong id="detailWorker">-</strong></span>
+                                </div>
+                                <div class="meta-item">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>Adresse: <strong id="detailAddress">-</strong></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Customer Notes -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-comment-dots"></i> Anmerkungen vom Kunden</h3>
+                            <button class="btn-small" onclick="openNotesModal()">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                        <div class="card-body" id="detailNotes">
+                            <div class="empty-state">
+                                <i class="fas fa-sticky-note"></i>
+                                <p>Keine Anmerkungen vorhanden</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Materials Card -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-boxes"></i> Material</h3>
+                            <button class="btn-small" onclick="openMaterialModal()">
+                                <i class="fas fa-plus"></i> Hinzufügen
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <div class="material-tabs">
+                                <button class="tab-btn active" data-tab="available">
+                                    <i class="fas fa-check-circle"></i> Vorhanden
+                                </button>
+                                <button class="tab-btn" data-tab="needed">
+                                    <i class="fas fa-shopping-cart"></i> Wird benötigt
+                                </button>
+                            </div>
+                            <div class="tab-content active" id="tab-available">
+                                <div id="materialAvailable">
+                                    <div class="empty-state small">
+                                        <p>Kein Material eingetragen</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-content" id="tab-needed">
+                                <div id="materialNeeded">
+                                    <div class="empty-state small">
+                                        <p>Nichts zu besorgen</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Costs Card -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-euro-sign"></i> Kosten & Rechnung</h3>
+                            <button class="btn-small" onclick="openCostModal()">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <div class="cost-breakdown" id="costBreakdown">
+                                <div class="cost-row">
+                                    <span>Materialkosten</span>
+                                    <span id="costMaterial">0,00 €</span>
+                                </div>
+                                <div class="cost-row">
+                                    <span>Arbeitskosten</span>
+                                    <span id="costLabor">0,00 €</span>
+                                </div>
+                                <div class="cost-row">
+                                    <span>Sonstiges</span>
+                                    <span id="costOther">0,00 €</span>
+                                </div>
+                                <div class="cost-row total">
+                                    <span>Gesamt (netto)</span>
+                                    <span id="costTotal">0,00 €</span>
+                                </div>
+                                <div class="cost-row total-vat">
+                                    <span>Gesamt (brutto, 19% MwSt.)</span>
+                                    <span id="costTotalVat">0,00 €</span>
+                                </div>
+                            </div>
+
+                            <div class="invoice-status-section">
+                                <h4>Rechnungsstatus
